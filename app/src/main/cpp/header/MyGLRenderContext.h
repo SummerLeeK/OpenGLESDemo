@@ -9,7 +9,7 @@
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 #include <GLES3/gl3.h>
-#include "Triangle.h"
+#include "Rectangle.h"
 
 class MyGLRenderContext {
 public:
@@ -18,7 +18,7 @@ public:
     ~MyGLRenderContext();
 
     static MyGLRenderContext *m_pContext;
-    Triangle triangle;
+    Rectangle rectangle;
 
     void SetImageData(int format, int width, int height, uint8_t *pData);
 

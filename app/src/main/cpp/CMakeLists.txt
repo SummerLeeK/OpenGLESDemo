@@ -20,6 +20,7 @@ include_directories(./header)
 # Gradle automatically packages shared libraries with your APK.
 file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/*.cpp
+        ${CMAKE_SOURCE_DIR}/*.c
      )
 add_library( # Sets the name of the library.
         opengles
