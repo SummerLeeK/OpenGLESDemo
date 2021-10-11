@@ -14,7 +14,13 @@ project("opengles")
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 include_directories(./header)
-aux_source_directory(. Source)
+# Creates and names a library, sets it as either STATIC
+# or SHARED, and provides the relative paths to its source code.
+# You can define multiple libraries, and CMake builds them for you.
+# Gradle automatically packages shared libraries with your APK.
+file(GLOB src-files
+        ${CMAKE_SOURCE_DIR}/*.cpp
+     )
 add_library( # Sets the name of the library.
         opengles
 
@@ -22,7 +28,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        ${Source})
+        ${src-files})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

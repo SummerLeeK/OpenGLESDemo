@@ -8,7 +8,7 @@
 MyGLRenderContext *MyGLRenderContext::m_pContext = nullptr;
 
 MyGLRenderContext::MyGLRenderContext() {
-
+    triangle = Triangle();
 }
 
 MyGLRenderContext::~MyGLRenderContext() {
@@ -35,6 +35,7 @@ void MyGLRenderContext::SetImageData(int format, int width, int height, uint8_t 
 
 void MyGLRenderContext::OnSurfaceCreated() {
     glClearColor(0, 0, 0, 1);
+    triangle.init();
 }
 
 void MyGLRenderContext::OnSurfaceChanged(int width, int height) {
@@ -43,6 +44,7 @@ void MyGLRenderContext::OnSurfaceChanged(int width, int height) {
 
 void MyGLRenderContext::OnDrawFrame() {
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    triangle.onDraw();
 }
 
 MyGLRenderContext *MyGLRenderContext::GetInstance() {

@@ -8,13 +8,17 @@
 #include <cstdint>
 #include <EGL/egl.h>
 #include <GLES/gl.h>
+#include <GLES3/gl3.h>
+#include "Triangle.h"
 
 class MyGLRenderContext {
 public:
     MyGLRenderContext();
 
     ~MyGLRenderContext();
-   static MyGLRenderContext* m_pContext;
+
+    static MyGLRenderContext *m_pContext;
+    Triangle triangle;
 
     void SetImageData(int format, int width, int height, uint8_t *pData);
 
@@ -24,9 +28,9 @@ public:
 
     void OnDrawFrame();
 
-    MyGLRenderContext *GetInstance();
+    static MyGLRenderContext *GetInstance();
 
-    void DestroyInstance();
+    static void DestroyInstance();
 };
 
 
