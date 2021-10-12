@@ -1,6 +1,7 @@
 //
 // Created by hk Lee on 2021/10/11.
 //
+#include <time.h>
 #include "Rectangle.h"
 
 
@@ -17,9 +18,10 @@ void Rectangle::init() {
             "#version 300 es                          \n"
             "layout(location = 0) in vec3 vPosition;  \n"
             "out vec3 ourColor;                       \n"
+            "uniform float offset;"
             "void main()                              \n"
             "{                                        \n"
-            "   gl_Position = vec4(vPosition,1.0f);              \n"
+            "   gl_Position = vec4(vPosition.x+offset,vPosition.y,vPosition.z,1.0f);              \n"
             "}                                        \n";
 
     char fShaderStr[] =
@@ -34,10 +36,10 @@ void Rectangle::init() {
     program = GLUtils::createProgram(vShaderStr, fShaderStr, vertexShader, fragmentShader);
 
     GLfloat vVertices[] = {
-            0.5f,  0.5f, 0.0f,  // top right
+            0.5f, 0.5f, 0.0f,  // top right
             0.5f, -0.5f, 0.0f,  // bottom right
             -0.5f, -0.5f, 0.0f,  // bottom left
-            -0.5f,  0.5f, 0.0f
+            -0.5f, 0.5f, 0.0f
     };
 
 
@@ -56,10 +58,10 @@ void Rectangle::init() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3*sizeof(float) ,(void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
 }
@@ -68,6 +70,12 @@ void Rectangle::onDraw() {
 
     glUseProgram(program);
     glBindVertexArray(VAO);
+    GLuint loca = glGetUniformLocation(program, "offset");
+    time_t tt = time(NULL);
+    struct tm *t=localtime(&tt);
+    float value=t->tm_sec/60.0-0.5f;
+    __android_log_print(ANDROID_LOG_DEBUG,"Rectangle","sec %d  value %f",t->tm_sec,value);
+    glUniform1f(loca, value);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 }
